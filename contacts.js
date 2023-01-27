@@ -9,7 +9,7 @@ const listContacts = async () => {
     const list = await fs.readFile(contactsPath, "utf-8");
 
     const listOfContacts = JSON.parse(list);
-    console.log(listOfContacts);
+    console.table(listOfContacts);
     return listOfContacts;
   } catch (error) {
     console.log(error);
@@ -30,14 +30,12 @@ const getContactById = async (contactId) => {
 const removeContact = async (contactId) => {
   try {
     const listOfContacts = await listContacts();
-    console.log(
-      `Видаляємо:${listOfContacts.find((elem) => elem.id === `${contactId}`)}`
-    );
+    console.log(listOfContacts.find((elem) => elem.id === `${contactId}`));
 
     const newListOfContacts = listOfContacts.filter(
       (elem) => elem.id !== `${contactId}`
     );
-    console.log(newListOfContacts);
+    console.table(newListOfContacts);
     await fs.writeFile(
       contactsPath,
       JSON.stringify(newListOfContacts, null, 2)
@@ -57,6 +55,7 @@ const addContact = async (name, email, phone) => {
       id: nanoid(),
     });
     const newListOfContacts = listOfContacts;
+    console.table(newListOfContacts)
     await fs.writeFile(
       contactsPath,
       JSON.stringify(newListOfContacts, null, 2)
@@ -72,3 +71,5 @@ module.exports = {
   removeContact,
   addContact,
 };
+
+
